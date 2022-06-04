@@ -9,11 +9,14 @@ services:
       DATABASE_ROOT_USERNAME: postgres_root
       DATABASE_ROOT_PASSWORD: ${POSTGRES_ROOT_PASSWORD}
       FUSIONAUTH_APP_MEMORY: 512M
-      FUSIONAUTH_APP_RUNTIME_MODE: production
-      FUSIONAUTH_APP_URL: https://fusionauth:9011
+      FUSIONAUTH_APP_RUNTIME_MODE: development
+      FUSIONAUTH_APP_URL: http://fusionauth:9011
       SEARCH_TYPE: database
     ports:
       - 9011:9011
+      - 9013:9013
+      - 9010:9010
+      - 9019:9019
     networks:
       - fusionauth
 
