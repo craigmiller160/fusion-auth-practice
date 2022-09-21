@@ -4,32 +4,33 @@ services:
   postgres:
     image: postgres:14.5
     container_name: postgres
+    networks:
+      - fusionauth
     environment:
       - POSTGRES_USER=user
       - POSTGRES_PASSWORD=password
     ports:
       - '5432:5432'
 
-#services:
-#  fusionauth:
-#    container_name: fusionauth
-#    image: fusionauth/fusionauth-app:1.36.4
-#    environment:
-#      DATABASE_URL: jdbc:postgresql://craigmiller160.ddns.net:30001/fusion_auth_practice
-#      DATABASE_ROOT_USERNAME: postgres_root
-#      DATABASE_ROOT_PASSWORD: ${POSTGRES_ROOT_PASSWORD}
-#      FUSIONAUTH_APP_MEMORY: 512M
-#      FUSIONAUTH_APP_RUNTIME_MODE: development
-#      FUSIONAUTH_APP_URL: http://fusionauth:9011
-#      SEARCH_TYPE: database
-#    ports:
-#      - 9011:9011
-#      - 9013:9013
-#      - 9010:9010
-#      - 9019:9019
-#    networks:
-#      - fusionauth
+  fusionauth:
+    container_name: fusionauth
+    image: fusionauth/fusionauth-app:1.40.0
+    environment:
+      DATABASE_URL: jdbc:postgresql://postgres:5432/fusion_auth_practice
+      DATABASE_ROOT_USERNAME: user
+      DATABASE_ROOT_PASSWORD: password
+      FUSIONAUTH_APP_MEMORY: 512M
+      FUSIONAUTH_APP_RUNTIME_MODE: development
+      FUSIONAUTH_APP_URL: http://fusionauth:9011
+      SEARCH_TYPE: database
+    ports:
+      - 9011:9011
+      - 9013:9013
+      - 9010:9010
+      - 9019:9019
+    networks:
+      - fusionauth
 
-#networks:
-#  fusionauth:
-#    driver: bridge
+networks:
+  fusionauth:
+    driver: bridge
